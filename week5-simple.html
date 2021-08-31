@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chairs</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="week4.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-slate">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">z-CHRS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Buy Chairs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row my-3">
+            <!-- Chairs Container -->
+            <div class="col d-flex" id="chairs-container">
+                <div class="card mb-3 w-25">
+                    <img src="images/chair.jpg" class="card-img-top" alt="slate metal chair">
+                    <div class="card-body">
+                        <h5 class="card-title">The Albert</h5>
+                        <p class="card-text">Info about this chair</p>
+                        <a href="#" class="btn btn-primary" onclick="addToCart('The Albert')">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="card mb-3 w-25">
+                    <img src="images/therebecca.jpg" class="card-img-top" alt="slate metal chair">
+                    <div class="card-body">
+                        <h5 class="card-title">The Rebecca</h5>
+                        <p class="card-text">Info about this chair</p>
+                        <a href="#" class="btn btn-primary" onclick="addToCart('The Rebecca')">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="card mb-3 w-25">
+                    <img src="images/thesophia.jpg" class="card-img-top" alt="slate metal chair">
+                    <div class="card-body">
+                        <h5 class="card-title">The Sophia</h5>
+                        <p class="card-text">Info about this chair</p>
+                        <a href="#" class="btn btn-primary" onclick="addToCart('The Sophia')">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="card mb-3 w-25">
+                    <img src="images/thewinston.jpg" class="card-img-top" alt="slate metal chair">
+                    <div class="card-body">
+                        <h5 class="card-title">The Winston</h5>
+                        <p class="card-text">Info about this chair</p>
+                        <a href="#" class="btn btn-primary" onclick="addToCart('The Winston')">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col-md">
+                <!-- Cart Container -->
+                <ul class="list-group" id="cart-container">
+                    <li id="empty-cart-text" class="list-group-item text-muted text-center p-3">Your cart is empty</li>
+                </ul>
+                <button class="btn btn-success btn-lg mt-3 float-end">Check Out</button>
+            </div>
+        </div>
+    </div>
+    <footer class="py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    Copyright 2021
+                </div>
+                <div class="col-md-3">
+                    <ul class="list-unstyled footer-links">
+                        <li><a class="btn btn-link text-success" href="#">One Chair</a></li>
+                        <li><a class="btn btn-link text-success" href="#">Two Chairs</a></li>
+                        <li><a class="btn btn-link text-success" href="#">Red Chair</a></li>
+                        <li><a class="btn btn-link text-success" href="#">Blue Chair</a></li>
+                    </ul>
+                </div>
+                <div class="col-md">
+                    Morbi ac tellus nisi. Duis nisi odio, blandit 
+                    vitae risus ut, aliquet fermentum massa. In id velit vestibulum, 
+                    consequat mauris a, tincidunt felis.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="week5-simple.js"></script>
+</body>
+</html>
