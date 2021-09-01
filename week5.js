@@ -1,16 +1,14 @@
 /**** Templates and Containers ****/
 
-const chairsContainer = document.getElementById("chairs-container")
-const cartContainer = document.getElementById("cart-container");
+const $chairsContainer = $("#chairs-container")
+const $cartContainer = $("#cart-container");
 
-const emptyCartTemplate = document.getElementById("empty-cart-template");
-const cartItemTemplate = document.getElementById("cart-item-template"); 
-const chairTemplate = document.getElementById("chair-template");
+const $emptyCartTemplate = $("#empty-cart-template");
+const $cartItemTemplate = $("#cart-item-template"); 
+const $chairTemplate = $("#chair-template");
 
 
 /**** Data ****/
-
-const  USERS_ENDPOINT = 'https://reqres.in/api/users';
 
 const shoppingCart = [];
 
@@ -48,31 +46,27 @@ const CHAIRS = [
 
 /**** Initial Render *****/ 
 
-window.addEventListener("load", () => {
+$(() => {
     renderChairList();
     renderShoppingCart();
 });
-
 
 /**** Render Chairs ****/
 
 // Build (and add to the page) the HTML for the entire list of chairs
 function renderChairList() {
-    emptyElement(chairsContainer);
-    for(let chair of CHAIRS) {
-        const chairElement = renderChair(chair);
-        chairsContainer.appendChild(chairElement);
-    }
+    $chairsContainer.empty();
+    CHAIRS.forEach(chair => $chairsContainer.append(renderChair(chair)));
 }
 
 // Build (and return) the HTML for just one chair
 function renderChair(chair) {
-    const chairElement = chairTemplate.cloneNode(true);
-    chairElement.querySelector("#chair-image").src = chair.image;
-    chairElement.querySelector("#chair-title").textContent = chair.title;
-    chairElement.querySelector("#chair-description").textContent = chair.description;
-    chairElement.querySelector("#chair-buy-button").addEventListener("click", () => addToCart(chair));
-    return chairElement;
+    const $chairElement = $chairTemplate.clone();
+    $chairElement.find("#chair-image").attr("src", chair.image);
+    $chairElement.find("#chair-title").text(chair.title);
+    $chairElement.find("#chair-description").textContent = chair.description;
+    $chairElement.find("#chair-buy-button").on("click", () => addToCart(chair));
+    return $chairElement;
 }
 
 
@@ -80,21 +74,20 @@ function renderChair(chair) {
 
 // Build (and add to the page) the HTML for the entire shopping cart
 function renderShoppingCart() {
-    console.log(shoppingCart);
-    emptyElement(cartContainer);
-    shoppingCart.forEach(item => cartContainer.appendChild(renderShoppingItem(item)));
+    $cartContainer.empty();
+    $.each(shoppingCart, (index, item) => $cartContainer.append(renderShoppingItem(item)));
     if(shoppingCart.length === 0) {
-        cartContainer.appendChild(emptyCartTemplate.cloneNode(true));
+        $emptyCartTemplate.clone().appendTo($cartContainer);
     }
 }
 
 // Build (and return) the HTML for just one item in the shopping cart
 function renderShoppingItem(item) {
-    const cartItem = cartItemTemplate.cloneNode(true);
-    cartItem.querySelector("#item-number").textContent = item.number;
-    cartItem.querySelector("#item-text").textContent = item.text;
-    cartItem.querySelector("#remove-button").addEventListener("click", () => removeFromCart(item.id));
-    return cartItem;
+    const $cartItem = $cartItemTemplate.clone();
+    $cartItem.find("#item-number").text(item.number);
+    $cartItem.find("#item-text").text(item.text);
+    $cartItem.find("#remove-button").on("click", () => removeFromCart(item.id));
+    return $cartItem;
 }
 
 
