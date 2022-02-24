@@ -36,27 +36,27 @@ const CHAIRS = [
     },
     {
         id: 3,
-        title: "The Rebecca",
+        title: "The Joey",
         description: "Simply marvelous",
         image: "images/therebecca.jpg",
         price: "$350"
     }
 ]
 
-
-/**** Initial Render *****/ 
-
 $(() => {
     renderChairList();
     renderShoppingCart();
-});
+})
 
 /**** Render Chairs ****/
 
 // Build (and add to the page) the HTML for the entire list of chairs
 function renderChairList() {
     $chairsContainer.empty();
-    CHAIRS.forEach(chair => $chairsContainer.append(renderChair(chair)));
+    for(let chair of CHAIRS) {
+        const $chairElement = renderChair(chair);
+        $chairsContainer.append($chairElement);
+    }
 }
 
 // Build (and return) the HTML for just one chair
@@ -69,14 +69,14 @@ function renderChair(chair) {
     return $chairElement;
 }
 
-
 /**** Render Shopping Car ****/
 
 // Build (and add to the page) the HTML for the entire shopping cart
 function renderShoppingCart() {
     $cartContainer.empty();
-    $.each(shoppingCart, (index, item) => $cartContainer.append(renderShoppingItem(item)));
+    shoppingCart.forEach( item => $cartContainer.append( renderShoppingItem(item) ) );
     if(shoppingCart.length === 0) {
+        //$cartContainer.append($emptyCartTemplate.clone());
         $emptyCartTemplate.clone().appendTo($cartContainer);
     }
 }
@@ -90,8 +90,6 @@ function renderShoppingItem(item) {
     return $cartItem;
 }
 
-
-/***** Event Listeners *****/
 
 function addToCart(chair) {
     // Update the data
@@ -120,11 +118,13 @@ function removeFromCart(id) {
     renderShoppingCart();
 }
 
-
-/**** Utility *****/ 
-
-function emptyElement(element) {
-    while(element.firstChild) {
-        element.removeChild(element.firstChild);
-    }
-}
+// $('<li></li>')
+//         .text(chair)
+//         .addClass('list-group-item')
+//         .appendTo($cartContainer)
+//         .append(
+//             $('<button></button>')
+//             .text("-")
+//             .addClass("btn btn-danger btn-sm float-end")
+//             .on("click", e => $(e.target).parent().slideUp())
+//         );

@@ -5,29 +5,85 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scratch</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <input type="text" id="todo-textbox">
-    <button onclick="addTodo()">Add</button>
-    <ul id="todo-list"></ul>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-3 d-flex">
+                <input type="text" id="todo-textbox" class="form-control me-2">
+                <button class="btn btn-success" id="todo-button">Add</button>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-6">
+                <div id="todo-list" class="list-group"></div>
+            </div>
+        </div>
+    </div>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script>
-        const todoTextbox = $("#todo-textbox");
-        const todoList = $("#todo-list");
-        
+        const $textbox = $("#todo-textbox");
+        const $list = $("#todo-list");
+        const $button = $("#todo-button");
+
+        const todoList = []
+
+        $(() => {
+            renderTodoList();
+        })
+
         function addTodo() {
-            // get the text from the textbox - .value || .val()
-            const todoText = todoTextbox.val();
-            // make a new li - document.createElement() || $("<li>")
-            const newLi = $("<li/>");
-            // put the text in the li - .textContent || .text()
-            newLi.text(todoText);
-            // put the li in the ul - .appendChild() || .append()
-            todoList.append(newLi);
+            const newTodo = {
+                text: $textbox.val(),
+                done: false
+            }
+            todoList.push(newTodo);
+            renderTodoList();
+            // clear the text from the textbox
+            $textbox.val("");
         }
 
+        function renderTodoList() {
+            $list.empty();
+            todoList.forEach( todo => renderTodo(todo).appendTo($list) )
+        }
+
+        function renderTodo(todo) {
+            return $("<label/>")
+                .addClass("list-group-item")
+                .text(todo.text)
+                .append( 
+                    $("<button/>")
+                        .text("X")
+                        .addClass("btn btn-danger btn-sm float-end")
+                        .on("click", event => {
+                            const index = todoList.indexOf(todo);
+                            todoList.splice(index, 1);
+                            $(event.target).parent().fadeOut("slow", renderTodoList);
+                        })
+                )
+                .prepend(
+                    $("<input/>")
+                        .attr("type", "checkbox")
+                        .addClass("me-3")
+                        .prop('checked', todo.done)
+                        .on("change", () => { 
+                            todo.done = !todo.done 
+                            // May want to do this...
+                            renderTodoList();
+                        })
+                )
+        }
+
+        $button.on("click", addTodo);
+        
+        $textbox.on("keypress", (event) => {
+            // If they hit the enter key
+            if(event.keyCode === 13) {
+                addTodo();
+            }
+        })
     </script>
 </body>
 </html>
-
-<!-- Great Before -->
