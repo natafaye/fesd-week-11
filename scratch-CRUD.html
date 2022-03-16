@@ -36,15 +36,31 @@
         const $textbox = $("#todo-textbox");
         const $todolist = $("#todo-list");
 
-        function addTodo() {
-            // get the text from the textbox
-            // make a new list item
-            // put the text from the textbox into the list item
-            // put the list item into the list
-            const $listItem = $("<li/>").text($textbox.val()).addClass("list-group-item").appendTo($todolist)
-            $listItem.one("click", () => completeTodo($listItem) );
-            // Empty out the textbox
-            $textbox.val("");
+        const todos = [
+            {
+                text: "Laundry",
+                completed: false
+            },
+            {
+                text: "Dishes",
+                completed: true
+            },
+        ]
+
+        // WARNING: this is untested code we threw together at the end of class, it might not work right
+
+        // TODO: call renderAllTodos when page loads
+
+        function renderAllTodos() {
+            // TODO: loop through the todos and renders each one
+        }
+
+        function renderTodo(todo) {
+            const $listItem = $("<li/>").text(todo.text).addClass("list-group-item").appendTo($todolist)
+            if(todo.completed) {
+                $listItem.addClass("text-decoration-line-through todo-text-muted")
+            }
+            $listItem.one("click", () => completeTodo(todo) );
         }
 
         function onTodoInputChanged() {
@@ -55,12 +71,27 @@
             }
         }
 
-        function completeTodo($todoLi) {
+        function addTodo() {
+            // get the text from the textbox
+            // make a new list item
+            // put the text from the textbox into the list item
+            // put the list item into the list
+            // Empty out the textbox
+            todos.push({
+                text: $todotext.val(),
+                completed: false
+            })
+            $textbox.val("");
+            renderAllTodos();
+        }
+
+        function completeTodo(todo) {
+            todo.completed = true;
+            renderAllTodos();
             // cross it out by adding the class text-decoration-line-through
             // mute the text by adding the class text-muted
             // move it to the bottom of the list
-            // remove the event listener situation
-            $todoLi.addClass("text-decoration-line-through todo-text-muted").appendTo($todolist) //.off("click");
+            // remove the event listener situation //.off("click");
         }
 
 

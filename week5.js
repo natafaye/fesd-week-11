@@ -1,3 +1,4 @@
+
 /**** Templates and Containers ****/
 
 const $chairsContainer = $("#chairs-container")
@@ -6,7 +7,6 @@ const $cartContainer = $("#cart-container");
 const $emptyCartTemplate = $("#empty-cart-template");
 const $cartItemTemplate = $("#cart-item-template"); 
 const $chairTemplate = $("#chair-template");
-
 
 /**** Data ****/
 
@@ -36,7 +36,7 @@ const CHAIRS = [
     },
     {
         id: 3,
-        title: "The Joey",
+        title: "The Rebecca",
         description: "Simply marvelous",
         image: "images/therebecca.jpg",
         price: "$350"
@@ -50,16 +50,13 @@ $(() => {
 
 /**** Render Chairs ****/
 
-// Build (and add to the page) the HTML for the entire list of chairs
 function renderChairList() {
     $chairsContainer.empty();
     for(let chair of CHAIRS) {
-        const $chairElement = renderChair(chair);
-        $chairsContainer.append($chairElement);
+        $chairsContainer.append(renderChair(chair));
     }
 }
 
-// Build (and return) the HTML for just one chair
 function renderChair(chair) {
     const $chairElement = $chairTemplate.clone();
     $chairElement.find("#chair-image").attr("src", chair.image);
@@ -71,18 +68,15 @@ function renderChair(chair) {
 
 /**** Render Shopping Car ****/
 
-// Build (and add to the page) the HTML for the entire shopping cart
 function renderShoppingCart() {
     $cartContainer.empty();
-    shoppingCart.forEach( item => $cartContainer.append( renderShoppingItem(item) ) );
+    shoppingCart.forEach(item => $cartContainer.append( renderShoppingCartItem(item) ))
     if(shoppingCart.length === 0) {
-        //$cartContainer.append($emptyCartTemplate.clone());
         $emptyCartTemplate.clone().appendTo($cartContainer);
     }
 }
 
-// Build (and return) the HTML for just one item in the shopping cart
-function renderShoppingItem(item) {
+function renderShoppingCartItem(item) {
     const $cartItem = $cartItemTemplate.clone();
     $cartItem.find("#item-number").text(item.number);
     $cartItem.find("#item-text").text(item.text);
@@ -90,6 +84,7 @@ function renderShoppingItem(item) {
     return $cartItem;
 }
 
+/***** Event Listeners *****/
 
 function addToCart(chair) {
     // Update the data
@@ -118,13 +113,7 @@ function removeFromCart(id) {
     renderShoppingCart();
 }
 
-// $('<li></li>')
-//         .text(chair)
-//         .addClass('list-group-item')
-//         .appendTo($cartContainer)
-//         .append(
-//             $('<button></button>')
-//             .text("-")
-//             .addClass("btn btn-danger btn-sm float-end")
-//             .on("click", e => $(e.target).parent().slideUp())
-//         );
+// function clearCart() {
+//     shoppingCart = [];
+//     renderShoppingCart();
+// }
