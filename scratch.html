@@ -1,30 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <style>
-        .todo-text-muted {
-            color: rgb(168, 168, 168);
-        }
-    </style>
 </head>
+
 <body>
-    <div class="container my-5">
-        <div class="row">
-            <div class="col-6">
-                <input type="text" id="todo-textbox" class="form-control" onkeypress="onTodoInputChanged()"/>
-            </div>
-            <div class="col text-end">
-                <button class="btn btn-primary" onclick="addTodo()">Add Todo</button>
+
+    <div class="container">
+        <div class="row my-4">
+            <div class="col">
+                <h2>Comments</h2>
             </div>
         </div>
-        <div class="row mt-3">
-            <div class="col">
-                <ul id="todo-list" class="list-group"></ul>
+        <div class="row my-4">
+            <div class="col-6" id="comments-container">
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <form>
+                    <div class="mb-3">
+                        <label for="comment-email-input" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="comment-email-input">
+                    </div>
+                    <div class="mb-3">
+                        <label for="comment-text-input" class="form-label">Comment</label>
+                        <textarea class="form-control" id="comment-text-input"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" onclick="addComment()">Submit</button>
+                </form>
             </div>
         </div>
     </div>
@@ -33,37 +43,95 @@
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script>
 
-        const $textbox = $("#todo-textbox");
-        const $todolist = $("#todo-list");
+        // CONTAINERS
 
-        function addTodo() {
-            // get the text from the textbox
-            // make a new list item
-            // put the text from the textbox into the list item
-            // put the list item into the list
-            const $listItem = $("<li/>").text($textbox.val()).addClass("list-group-item").appendTo($todolist)
-            $listItem.one("click", () => completeTodo($listItem) );
-            // Empty out the textbox
-            $textbox.val("");
-        }
+        const $commentsContainer = $("#comments-container");
+        const $commentEmailInput = $("#comment-email-input");
+        const $commentTextInput = $("#comment-text-input");
 
-        function onTodoInputChanged() {
-            // if they pressed the enter key
-            if(event.keyCode === 13) {
-                // Add the todo
-                addTodo();
+        // DATA
+
+        const commentList = [
+            {
+                id: 0,
+                email: "something@gmail.com",
+                text: "This is great!",
+                date: new Date("4/13/22 4:03 PM")
+            }
+        ]
+
+        // ON PAGE LOAD
+
+        $(() => {
+            renderComments();
+        })
+
+        // COMMENTS RENDERING
+
+        function renderComments() {
+            console.log("Rendering comments again...")
+            $commentsContainer.empty();
+            for(const comment of commentList) {
+                renderComment(comment).appendTo($commentsContainer);
             }
         }
 
-        function completeTodo($todoLi) {
-            // cross it out by adding the class text-decoration-line-through
-            // mute the text by adding the class text-muted
-            // move it to the bottom of the list
-            // remove the event listener situation
-            $todoLi.addClass("text-decoration-line-through todo-text-muted").appendTo($todolist) //.off("click");
+        function renderComment(comment) {
+            return $("<div/>").addClass("card mb-3").append(
+                        $("<div/>").addClass("card-body").append( 
+                            $("<h5/>").addClass("card-title").text(comment.email) 
+                        ).append( 
+                            $("<p/>").addClass("card-text").text(comment.text)
+                        ).append( 
+                            $("<button/>").addClass("btn btn-warning").text("Delete").on("click", () => {
+                                deleteComment(comment.id);
+                            })
+                        )
+                    )
         }
 
+        // EVENT HANDLERS
+
+        function addComment() {
+            // Make sure the page doesn't reload
+            event.preventDefault();
+
+            // get the information from the HTML form controls
+            const emailValue = $commentEmailInput.val();
+            const textValue = $commentTextInput.val();
+
+            // make a comment object with that information
+            const comment = { 
+                id: commentList[commentList.length - 1].id + 1, // cool little hack for getting a new unique id
+                email: emailValue,
+                text: textValue,
+                date: Date()
+            }
+
+            // add that comment object to our list of comments
+            commentList.push(comment)
+
+            // re-render the comments
+            renderComments();
+            
+            // clear out the textbox and textarea
+            $commentEmailInput.val("")
+            $commentTextInput.val("")
+        }
+
+        function deleteComment(commentId) {
+            // find the comment with that id
+            // figure out what index does that comment have
+            const index = commentList.findIndex(comment => comment.id === commentId)
+
+            // call splice to delete that index
+            commentList.splice(index, 1);
+            
+            // re-render the comments
+            renderComments();
+        }
 
     </script>
 </body>
+
 </html>

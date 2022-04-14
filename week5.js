@@ -1,4 +1,3 @@
-
 /**** Templates and Containers ****/
 
 const $chairsContainer = $("#chairs-container")
@@ -36,7 +35,7 @@ const CHAIRS = [
     },
     {
         id: 3,
-        title: "The Rebecca",
+        title: "The Joey",
         description: "Simply marvelous",
         image: "images/therebecca.jpg",
         price: "$350"
@@ -52,31 +51,35 @@ $(() => {
 
 function renderChairList() {
     $chairsContainer.empty();
-    for(let chair of CHAIRS) {
-        $chairsContainer.append(renderChair(chair));
+    for(const chair of CHAIRS) {
+        const $chairCard = renderChairCard(chair);
+        $chairsContainer.append($chairCard);
     }
 }
 
-function renderChair(chair) {
+function renderChairCard(chair) {
     const $chairElement = $chairTemplate.clone();
     $chairElement.find("#chair-image").attr("src", chair.image);
     $chairElement.find("#chair-title").text(chair.title);
-    $chairElement.find("#chair-description").textContent = chair.description;
+    $chairElement.find("#chair-description").text(chair.description);
     $chairElement.find("#chair-buy-button").on("click", () => addToCart(chair));
     return $chairElement;
 }
 
-/**** Render Shopping Car ****/
+/**** Render Cart ****/
 
 function renderShoppingCart() {
     $cartContainer.empty();
-    shoppingCart.forEach(item => $cartContainer.append( renderShoppingCartItem(item) ))
+    for(const item of shoppingCart) {
+        const $shoppingListItem = renderShoppingListItem(item);
+        $cartContainer.append($shoppingListItem);
+    }
     if(shoppingCart.length === 0) {
-        $emptyCartTemplate.clone().appendTo($cartContainer);
+        $cartContainer.append($emptyCartTemplate.clone());
     }
 }
 
-function renderShoppingCartItem(item) {
+function renderShoppingListItem(item) {
     const $cartItem = $cartItemTemplate.clone();
     $cartItem.find("#item-number").text(item.number);
     $cartItem.find("#item-text").text(item.text);
@@ -84,10 +87,9 @@ function renderShoppingCartItem(item) {
     return $cartItem;
 }
 
-/***** Event Listeners *****/
+/**** Event Handlers ****/
 
 function addToCart(chair) {
-    // Update the data
     let item = shoppingCart.find(i => i.id === chair.id);
     if(!item) {
         item = {
@@ -98,22 +100,14 @@ function addToCart(chair) {
         shoppingCart.push(item);
     }
     item.number++;
-    // Rerender the shopping cart part of the page
     renderShoppingCart();
 }
 
-function removeFromCart(id) {
-    // Update the data
-    const item = shoppingCart.find(i => i.id === id);
+function removeFromCart(chairId) {
+    const item = shoppingCart.find(i => i.id === chairId);
     item.number--;
     if(item.number === 0) {
         shoppingCart.splice(shoppingCart.indexOf(item), 1);
     }
-    // Rerender the shopping cart part of the page
     renderShoppingCart();
 }
-
-// function clearCart() {
-//     shoppingCart = [];
-//     renderShoppingCart();
-// }
