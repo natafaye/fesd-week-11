@@ -7,50 +7,80 @@
     <title>Document</title>
 </head>
 <body>
-    <input type="text" id="todo-textbox" onkeypress="onTyped()"/>
+    <input type="text" id="todo-input" onkeypress="onType()" />
     <button onclick="addTodo()">Add Todo</button>
+    <button onclick="clearTodos()">Clear All Todos</button>
     <ul id="todo-list"></ul>
 
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script>
-        // Finding
-        const textbox = document.getElementById("todo-textbox")
-        const list = document.querySelector("#todo-list")
-        
-        function addTodo() {
-            // Don't let them add an empty task
-            if(textbox.value === "") {
-                return;
-            }
+        const $input = $("#todo-input")
+        const $list = $("#todo-list")
 
-            // getting the text from the textbox
-            //const todoText = 
-            // making a new list item
-            let li = document.createElement("li")
-            // setting the text inside the list item
-            li.textContent = textbox.value;
+        let todoList = ["Laundry", "Dishes"]; // these todos could have come from the backend or whatever
 
-            // hook up deleting
-            li.addEventListener("click", () => {
-                li.remove();
-                // Delete the list item that we're in the process of creating right now
-            })
+        // When the page first loads
+        window.addEventListener("load", () => {
+            renderTodoList();
+        })
 
-            // moving the list item into the list in the page
-            list.appendChild(li)
-
-            // clear out the textbox
-            textbox.value = "";
-        }
-
-        function onTyped() {
-            if(event.keyCode === 13) { // enter key
+        function onType() {
+            if (event.keyCode === 13) { // 13 is the enter key
                 addTodo();
             }
         }
         
+        /**** RENDERING CODE *****/
+
+        function renderTodoList() {
+            // Empty it out
+            $list.empty();
+            // Fill it up with todos based on the data
+            for(const todoItem of todoList) {
+                $list.append( renderTodo(todoItem) )
+            }
+        }
+
+        function renderTodo(todoText) {
+            const $listItem = $("<li/>")
+                .text(todoText)
+                .on("click", () => deleteTodo(todoText))
+            return $listItem;
+        }
+
+        /***** EVENT LISTENERS *****/
+
+        function addTodo() {
+            const newTodoText = $input.val();
+
+            todoList.push(newTodoText)
+
+            $input.val("")
+
+            renderTodoList();
+        }
+
+        function updateTodo(index, newTodoText) {
+            // Update the data
+            todoList[index] = newTodoText;
+
+            // Rerender based on the data
+            renderTodoList();
+        }
+
+        function deleteTodo(todoText) {
+            // Update the data
+            todoList = todoList.filter(todo => todo !== todoText) // should be working off ids not just the text
+
+            // Rerender based on the data
+            renderTodoList();
+        }
+
+        function clearTodos() {
+            todoList = [];
+
+            renderTodoList();
+        }
     </script>
 </body>
-
 </html>
-
-<!-- GREAT BEFORE -->

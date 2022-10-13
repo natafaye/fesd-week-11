@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Chairs</title>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="week4.css">
+    <link rel="stylesheet" href="week11.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-slate">
@@ -36,48 +36,32 @@
     <div class="container">
         <div class="row my-3">
             <!-- Chairs Container -->
-            <div class="col d-flex" id="chairs-container">
-                <div class="card mb-3 w-25">
-                    <img src="images/chair.jpg" class="card-img-top" alt="slate metal chair">
-                    <div class="card-body">
-                        <h5 class="card-title">The Albert</h5>
-                        <p class="card-text">Info about this chair</p>
-                        <a href="#" class="btn btn-primary" onclick="addToCart('The Albert')">Add to Cart</a>
-                    </div>
-                </div>
-                <div class="card mb-3 w-25">
-                    <img src="images/therebecca.jpg" class="card-img-top" alt="slate metal chair">
-                    <div class="card-body">
-                        <h5 class="card-title">The Rebecca</h5>
-                        <p class="card-text">Info about this chair</p>
-                        <a href="#" class="btn btn-primary" onclick="addToCart('The Rebecca')">Add to Cart</a>
-                    </div>
-                </div>
-                <div class="card mb-3 w-25">
-                    <img src="images/thesophia.jpg" class="card-img-top" alt="slate metal chair">
-                    <div class="card-body">
-                        <h5 class="card-title">The Sophia</h5>
-                        <p class="card-text">Info about this chair</p>
-                        <a href="#" class="btn btn-primary" onclick="addToCart('The Sophia')">Add to Cart</a>
-                    </div>
-                </div>
-                <div class="card mb-3 w-25">
-                    <img src="images/thewinston.jpg" class="card-img-top" alt="slate metal chair">
-                    <div class="card-body">
-                        <h5 class="card-title">The Winston</h5>
-                        <p class="card-text">Info about this chair</p>
-                        <a href="#" class="btn btn-primary" onclick="addToCart('The Winston')">Add to Cart</a>
-                    </div>
-                </div>
-            </div>
+            <div class="col d-flex" id="chairs-container"></div>
         </div>
         <div class="row my-3">
             <div class="col-md">
                 <!-- Cart Container -->
-                <ul class="list-group" id="cart-container">
-                    <li id="empty-cart-text" class="list-group-item text-muted text-center p-3">Your cart is empty</li>
-                </ul>
+                <ul class="list-group" id="cart-container"></ul>
                 <button class="btn btn-success btn-lg mt-3 float-end">Check Out</button>
+            </div>
+        </div>
+    </div>
+    <div class="d-none">
+        <!-- Empty Cart Template -->
+        <li id="empty-cart-template" class="list-group-item text-muted text-center p-3">Your cart is empty</li>
+        <!-- Cart Item Template -->
+        <li id="cart-item-template" class="list-group-item p-3">
+            <span id="item-number" class="badge bg-primary rounded-pill me-1">0</span>
+            <span id="item-text">Text</span>
+            <button id="remove-button" class="btn btn-danger btn-sm float-end">-</button>
+        </li>
+        <!-- Chair Template -->
+        <div id="chair-template" class="card mb-3 w-25 mx-2">
+            <img src="images/chair.jpg" id="chair-image" class="card-img-top" alt="slate metal chair">
+            <div class="card-body">
+                <h5 id="chair-title" class="card-title">Chair Title</h5>
+                <p id="chair-description" class="card-text">Info about this chair</p>
+                <a id="chair-buy-button" href="#" class="btn btn-primary">Add to Cart</a>
             </div>
         </div>
     </div>
@@ -105,6 +89,9 @@
     </footer>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="week4-simple.js"></script>
+    <script src="week11.js"></script>
 </body>
 </html>
+
+
+<!-- GREAT BEFORE -->
