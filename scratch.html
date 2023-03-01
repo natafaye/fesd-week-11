@@ -1,86 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
+
 <body>
-    <input type="text" id="todo-input" onkeypress="onType()" />
-    <button onclick="addTodo()">Add Todo</button>
-    <button onclick="clearTodos()">Clear All Todos</button>
-    <ul id="todo-list"></ul>
+    <input type="text" id="list-input" onkeypress="onKeyPress()" />
+    <button onclick="createTodo()">Add</button>
+    <button id="delete-top-item-button">Delete Top Item</button>
+    <button onclick="deleteAllTodos()">Delete All</button>
+    <ul id="list-container" class="list-group">
+    </ul>
 
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script>
-        const $input = $("#todo-input")
-        const $list = $("#todo-list")
+        const textbox = document.getElementById("list-input") // get element by id = NO #
+        const list = document.querySelector("#list-container") // query selector when selecting by id = #
+        const deleteTopItemButton = document.getElementById("delete-top-item-button")
 
-        let todoList = ["Laundry", "Dishes"]; // these todos could have come from the backend or whatever
+        const todoList = [
+            { id: 0, text: "Apples"}, 
+            { id: 1, text: "Milk"}
+        ]
 
-        // When the page first loads
+        deleteTopItemButton.addEventListener("click", deleteTopItem)
+
         window.addEventListener("load", () => {
-            renderTodoList();
+            // Run when the app first loads in
+            renderAllTodos()
         })
 
-        function onType() {
-            if (event.keyCode === 13) { // 13 is the enter key
-                addTodo();
-            }
-        }
-        
-        /**** RENDERING CODE *****/
+        /** Render Functions **/
 
-        function renderTodoList() {
-            // Empty it out
-            $list.empty();
-            // Fill it up with todos based on the data
-            for(const todoItem of todoList) {
-                $list.append( renderTodo(todoItem) )
+        // Maid function - makes the UI look like it should
+        function renderAllTodos() {
+            emptyElement(list)
+            for(const todo of todoList) {
+                renderTodo(todo)
             }
         }
 
-        function renderTodo(todoText) {
-            const $listItem = $("<li/>")
-                .text(todoText)
-                .on("click", () => deleteTodo(todoText))
-            return $listItem;
+        function renderTodo(todo) {
+            // Make a new list item that has that text inside it
+            const newLi = document.createElement("li") // make sure to put quotation marks
+
+            // Either put it on the whole list item
+            //newLi.addEventListener("click", () => deleteListItem(newLi))
+
+            newLi.textContent = todo.text
+            newLi.classList.add("list-group-item") // Adds a class that changes the style
+
+            // Make an image
+            const image = document.createElement("img")
+            image.src = "/images/chair.jpg"
+            image.style.width = "50px" // Changes the style directly
+            newLi.appendChild(image)
+
+            // OR make a delete button and just listen to clicks on that button
+            // Make a delete button
+            const button = document.createElement("button")
+            button.textContent = "Delete"
+            button.classList.add("btn")
+            button.classList.add("btn-danger")
+            button.addEventListener("click", () => deleteTodo(todo.id))
+            newLi.appendChild(button)
+
+            // Put that list item in the list
+            list.appendChild(newLi) // MOVES THINGS
         }
 
-        /***** EVENT LISTENERS *****/
+        /** Helper Function **/
 
-        function addTodo() {
-            const newTodoText = $input.val();
-
-            todoList.push(newTodoText)
-
-            $input.val("")
-
-            renderTodoList();
+        function emptyElement(element) {
+            while (element.firstChild) {
+                element.removeChild(element.firstChild)
+            }
         }
 
-        function updateTodo(index, newTodoText) {
-            // Update the data
-            todoList[index] = newTodoText;
+        /** EVENT LISTENERS **/
 
-            // Rerender based on the data
-            renderTodoList();
+        function createTodo() {
+            const newTodo = {
+                id: 5, // for now
+                text: textbox.value
+            }
+            todoList.push(newTodo)
+
+            textbox.value = ""
+            
+            renderAllTodos()
         }
 
-        function deleteTodo(todoText) {
-            // Update the data
-            todoList = todoList.filter(todo => todo !== todoText) // should be working off ids not just the text
+        function deleteTopItem() {
+            todoList.shift()
 
-            // Rerender based on the data
-            renderTodoList();
+            renderAllTodos()
         }
 
-        function clearTodos() {
-            todoList = [];
+        function deleteTodo(idToDelete) {
+            const indexToDelete = todoList.findIndex(todo => todo.id === idToDelete)
+            todoList.splice(indexToDelete, 1, 0)
 
-            renderTodoList();
+            renderAllTodos()
         }
+
+        function deleteAllTodos() {
+            listArray = []
+
+            renderAllTodos()
+        }
+
+        function onKeyPress() {
+            console.log(event.key)
+            if(event.keyCode === 13) { // 13 means Enter
+                createListItem()
+            }
+        }
+
+
     </script>
 </body>
+
 </html>
+
+<!-- GREAT BEFORE -->
+
+
+
