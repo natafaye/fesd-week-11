@@ -8,91 +8,82 @@
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <input type="text" id="textbox" onkeypress="onType()"/>
-    <button onclick="addTodo()">Add Todo</button>
-    <button onclick="clearTodos()">Clear Todos</button>
-    <ul id="todo-container">
-    </ul>
-
+    <input type="text" id="make-input" />
+    <button id="make-button">Make</button> <!-- listen to this button being clicked --><!-- onclick="makeIt()" -->
+    <button onclick="clearAll()">Clear All</button>
+    <ul id="make-list"></ul>
     <script>
+        const makeButton = document.getElementById("make-button")
+        makeButton.addEventListener("click", makeIt)
 
-        let todos = [ { id: 0, text: "Do Laundry"}, { id: 1, text: "Make Sandwich" } ]
-        let nextId = 0; // easy way to make new ids
+        const makeInput = document.getElementById("make-input")
+        const makeList = document.getElementById("make-list")
 
-        const container = document.getElementById("todo-container")
-        const textbox = document.getElementById("textbox")
 
-        window.addEventListener("load", () => {
-            renderAllTodos()
-        })
+        // Data (state)
+        const todoList = ["Laundry", "Taxes"]
 
-        /*** RENDERING ***/
+        // When the app first loads in, render whatever data we start with
+        renderTodos()
 
-        function renderAllTodos() {
-            while(container.hasChildNodes()) {
-                container.removeChild(container.lastChild)
+        // RENDER FUNCTIONS
+
+        function renderTodos() {
+            // clear out the old stuff that might be out of date - not the most efficient but fine for now
+            while(makeList.hasChildNodes()) {
+                makeList.removeChild(makeList.firstChild)
             }
 
-            for(const todo of todos) {
-                renderTodo(todo)
+            // Put it all back in, but updated
+            for(const todoValue of todoList) {
+                const todoLi = renderTodo(todoValue)
+                makeList.appendChild(todoLi)
             }
         }
 
-        function renderTodo(todo) {
-            // code makes an li
-            const newLi = document.createElement("li")
 
-            // sets up the li with the right text and such
-            newLi.textContent = todo.text
-            newLi.addEventListener("click", () => deleteTodo(todo.id))
-            newLi.id = "todo-" + todo.id
+        // Contained as possible
+        // data => thinks => HTML
+        function renderTodo(todoValue) {
+            const newBabyLi = document.createElement("li")
 
-            // puts the li in the ul
-            container.appendChild(newLi)
+            newBabyLi.textContent = todoValue
+
+            newBabyLi.addEventListener("click", () => deleteTodo(todoValue))
+
+            return newBabyLi // the li in the great before
         }
 
-        /*** EVENT LISTENERS ***/
 
-        function addTodo() {
-            // also add it to our data
-            const newTodo = { 
-                id: nextId++, // little hack
-                text: textbox.value 
-            }
-            todos.push(newTodo)
+        // EVENT HANDLER FUNCTIONS
 
-            renderAllTodos()
-            textbox.value = ""
+        function makeIt() {
+            // Change the data
+            todoList.push(makeInput.value)
+
+            // A little thing
+            makeInput.value = ""
+
+            // Make it so!
+            renderTodos()
         }
 
-        function deleteTodo(idOfTaskToDelete) {
-            // make change to data as well
-            const indexToDelete = todos.findIndex(t => t.id === idOfTaskToDelete)
-            todos.splice(indexToDelete, 1)
-
-            renderAllTodos()
+        function deleteTodo(todoValue) {
+            const indexToDelete = todoList.indexOf(todoValue) 
+            todoList.splice(indexToDelete, 1)
+            
+            // Make it so!
+            renderTodos()
         }
 
-        function updateTodo(idOfTodoToUpdate, newText) {
+        function clearAll() {
+            // Change the data
+            todoList = []
 
-            const updatedTodo = { text: newText, id: idOfTodoToUpdate }
-            // OVERWRITE TODO HERE TO UPDATE TODO
-
-            renderAllTodos()
+            // Make it so!
+            renderTodos()
         }
 
-        function clearTodos() {
-            // make change to data as well
-            todos = []
-
-            renderAllTodos()
-        }
-
-        function onType() {
-            if(event.keyCode === 13) { // the enter key
-                addTodo()
-            }
-        }
     </script>
 </body>
 </html>

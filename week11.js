@@ -96,6 +96,7 @@ function renderShoppingListItem(item) {
 
 /**** EVENT LISTENERS ****/
 
+// Run when page has finished loading in
 $(() => {
     chairList = chairsFromBackend
     renderChairList()
