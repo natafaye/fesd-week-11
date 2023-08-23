@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,84 +8,132 @@
     <title>Document</title>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
+
 <body>
-    <input type="text" id="make-input" />
-    <button id="make-button">Make</button> <!-- listen to this button being clicked --><!-- onclick="makeIt()" -->
-    <button onclick="clearAll()">Clear All</button>
-    <ul id="make-list"></ul>
+    <div class="container mt-4">
+        <form class="d-flex gap-3 mb-3 align-items-center">
+            <input type="text" class="form-control" id="create-textbox" />
+            <input type="text" class="form-control" id="type-textbox" />
+            <select id="number-select" class="form-select">
+                <option>Guard</option>
+                <option>Center</option>
+                <option>Kick Person</option>
+            </select>
+            <button class="btn btn-primary flex-grow-1" type="submit"
+                onclick="addPerson(event)">Add&nbsp;to&nbsp;Table</button>
+        </form>
+        <table class="table table-striped">
+            <tbody id="items-table">
+            </tbody>
+        </table>
+    </div>
+
     <script>
-        const makeButton = document.getElementById("make-button")
-        makeButton.addEventListener("click", makeIt)
+        /*** DATA (STATE) ***/
 
-        const makeInput = document.getElementById("make-input")
-        const makeList = document.getElementById("make-list")
+        const people = [{ name: "Natalie", type: "Great", position: "Forward", date: new Date(Date.now()) }] // pretend this came from a backend
 
 
-        // Data (state)
-        const todoList = ["Laundry", "Taxes"]
+        /*** RENDER FUNCTIONS ***/
 
-        // When the app first loads in, render whatever data we start with
-        renderTodos()
+        // Render based on the data
+        // Clear what was there before, render it all again
 
-        // RENDER FUNCTIONS
+        const createTextbox = document.getElementById("create-textbox")
+        const typeTextbox = document.getElementById("type-textbox")
+        const numberSelect = document.getElementById("number-select")
+        const tableBody = document.querySelector("#items-table")
 
-        function renderTodos() {
-            // clear out the old stuff that might be out of date - not the most efficient but fine for now
-            while(makeList.hasChildNodes()) {
-                makeList.removeChild(makeList.firstChild)
+        function renderPeopleTable() {
+            emptyElement(tableBody)
+            for (let i = 0; i < people.length; i++) {
+                const person = people[i]
+
+                const newRow = document.createElement("tr")
+                newRow.innerHTML = `
+                <td>${person.name}</td>
+                <td>${person.type}</td>
+                <td>${person.position}</td>
+                <td>${person.date.toLocaleDateString()}</td>
+                <td><button id="delete-button" class="btn btn-danger">Delete</button></td>
+                <td><button id="update-button" class="btn btn-warning">Update Type to Special</button></td>
+            `
+                newRow.querySelector("#delete-button").addEventListener("click", () => deletePerson(person) )
+                newRow.querySelector("#update-button").addEventListener("click", () => updatePerson(person) )
+                tableBody.appendChild(newRow)
+            }
+        }
+
+        // TO MAKE LEGIT: get the data from backend
+        renderPeopleTable() // when the app first loads in
+    
+
+        /*** EVENT LISTENERS ***/
+
+        // Change the data, and then call the render functions
+
+        function addPerson(event) {
+            event.preventDefault()
+
+            // Make the newly created piece of data
+            const newPerson = {
+                name: createTextbox.value,
+                type: typeTextbox.value,
+                position: numberSelect.value,
+                date: new Date(Date.now())
             }
 
-            // Put it all back in, but updated
-            for(const todoValue of todoList) {
-                const todoLi = renderTodo(todoValue)
-                makeList.appendChild(todoLi)
-            }
-        }
+            // Adding it to the state (data)
+            people.push(newPerson)
 
-
-        // Contained as possible
-        // data => thinks => HTML
-        function renderTodo(todoValue) {
-            const newBabyLi = document.createElement("li")
-
-            newBabyLi.textContent = todoValue
-
-            newBabyLi.addEventListener("click", () => deleteTodo(todoValue))
-
-            return newBabyLi // the li in the great before
-        }
-
-
-        // EVENT HANDLER FUNCTIONS
-
-        function makeIt() {
-            // Change the data
-            todoList.push(makeInput.value)
-
-            // A little thing
-            makeInput.value = ""
-
-            // Make it so!
-            renderTodos()
-        }
-
-        function deleteTodo(todoValue) {
-            const indexToDelete = todoList.indexOf(todoValue) 
-            todoList.splice(indexToDelete, 1)
+            // TO MAKE LEGIT: Add it to the backend
             
-            // Make it so!
-            renderTodos()
+
+            // Render again
+            renderPeopleTable()
+
+            // Clear the form
+            createTextbox.value = ""
+            typeTextbox.value = ""
         }
 
-        function clearAll() {
-            // Change the data
-            todoList = []
+        function deletePerson(personToDelete) {
+            console.log("personToDelete", personToDelete)
+            // Update the data
+            const indexToRemove = people.indexOf(personToDelete)
+            people.splice(indexToRemove, 1)
 
-            // Make it so!
-            renderTodos()
+            // TO MAKE LEGIT: Add it to the backend
+            
+
+
+            // Make it so
+            renderPeopleTable()
+        }
+
+        function updatePerson(personToUpdate) {
+            console.log("personToUpdate", personToUpdate)
+            // Update the data
+            personToUpdate.type = "Special"
+
+            // TO MAKE LEGIT: Add it to the backend
+            
+
+            // Make it so
+            renderPeopleTable()
+        }
+
+        // HELPER
+
+        function emptyElement(element) {
+            while (element.firstChild) {
+                element.removeChild(element.firstChild)
+            }
         }
 
     </script>
 </body>
+
 </html>
 
+<!-- GREAT BEFORE -->

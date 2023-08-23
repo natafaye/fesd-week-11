@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-3">
+        <h3>Unscramble</h3>
+        <div class="display-1" id="board-container">
+        </div>
+        <div class="display-2 my-3" id="guess-container">
+            
+        </div>
+        <button class="btn btn-success btn-lg" onclick="onGuess()">Guess</button>
+        <p class="mt-4 fs-3" id="message-container"></p>
+    </div>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="unscramble.js"></script>
+</body>
+</html>

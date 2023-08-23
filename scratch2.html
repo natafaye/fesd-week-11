@@ -1,0 +1,19 @@
+const listOfMessages = [ 
+  { id: 0, text: "Hello!" }, { id: 1, text: "Bye!" }
+] 
+renderMessages(listOfMessages)
+
+function renderMessages(messages) {
+  messages.forEach((message) => {
+    const div = document.createElement("div")
+    div.textContent = message.text
+    div.addEventListener("click", () => {
+      const indexToDelete = messages.findIndex(
+        m => m.id === message.id
+      )
+	messages.splice(indexToDelete, 1)
+      div.remove()
+    })
+    container.appendChild(div)
+  })
+}

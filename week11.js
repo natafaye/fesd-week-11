@@ -117,8 +117,6 @@ function addToCart(chairId) {
     }
     item.number++
 
-    // IF LEGIT: send a message to the backend to make the same change
-
     renderShoppingCart()
 }
 
@@ -128,8 +126,6 @@ function removeFromCart(chairId) {
     if(item.number === 0) {
         shoppingCart.splice(shoppingCart.indexOf(item), 1);
     }
-
-    // IF LEGIT: send a message to the backend to make the same change
 
     renderShoppingCart();
 }
