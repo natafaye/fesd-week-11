@@ -9,7 +9,7 @@ const guessTextbox = document.getElementById("guess-textbox")
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-let word = "APPLE"
+let word = "ADELE"
 let guesses = []
 
 /**** RENDER ****/
@@ -103,7 +103,7 @@ function onGuess(newGuess) {
 }
 
 function reset() {
-    word = "APPLE"
+    word = "ADELE"
     guesses = []
 
     // rerender based on the data

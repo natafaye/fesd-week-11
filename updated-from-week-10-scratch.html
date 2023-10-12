@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-4">
+        <form>
+            <input type="text" id="input-textbox" />
+            <button onclick="onButtonClick(event)">Click Me</button>
+        </form>
+        <button onclick="clearTheTable()">Temper Tantrum</button>
+        <h3>My Favorite People</h3>
+        <table>
+            <tbody id="table-body">
+
+            </tbody>
+        </table>
+    </div>
+
+    <script> // putting javascript straight in here for convenience of demo
+
+        // state = data for the app
+        let favoriteList = ["Abigail", "Natalie"]
+
+        const tableBody = document.getElementById("table-body")
+        const input = document.querySelector("#input-textbox")
+
+        // render function it looks at the data and makes the UI (the page) match the data
+        function renderFavoritePeopleTable() {
+            // clear out rows rendered last time
+            while(tableBody.hasChildNodes()) {
+                tableBody.firstChild.remove()
+            }
+
+            // render all the rows again
+            for (let i = 0; i < favoriteList.length; i++) {
+                const person = favoriteList[i]
+                const newRow = document.createElement("tr")
+
+                newRow.innerHTML = `
+                    <td>${person}</td>
+                    <td><button id="delete-button" class="btn btn-danger">Delete</button></td>
+                `
+
+                newRow.querySelector("#delete-button").addEventListener("click", () => {
+                    // update the data (state)
+                    const indexToRemove = favoriteList.indexOf(person)
+                    favoriteList.splice(indexToRemove, 1)
+                    
+                    // rerender based on the new state of the data
+                    renderFavoritePeopleTable()
+                })
+                tableBody.appendChild(newRow)
+            }
+        }
+
+
+        // when it first loads in
+        renderFavoritePeopleTable()
+
+        function onButtonClick(event) {
+            event.preventDefault()
+
+            // change the data (state)
+            favoriteList.push(input.value)
+            // rerender the area of the page showing that data/state
+            renderFavoritePeopleTable()
+
+            input.value = ""
+        }
+
+        // Event listener
+        function clearTheTable() {
+            // Remove from the data
+            favoriteList = []
+
+            // rerender
+            renderFavoritePeopleTable()
+        }
+
+    </script>
+</body>
+
+</html>
+
+<!-- THE GREAT BEFORE -->

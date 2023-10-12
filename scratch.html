@@ -11,125 +11,68 @@
 
 <body>
     <div class="container mt-4">
-        <form class="d-flex gap-3 mb-3 align-items-center">
-            <input type="text" class="form-control" id="create-textbox" />
-            <input type="text" class="form-control" id="type-textbox" />
-            <select id="number-select" class="form-select">
-                <option>Guard</option>
-                <option>Center</option>
-                <option>Kick Person</option>
-            </select>
-            <button class="btn btn-primary flex-grow-1" type="submit"
-                onclick="addPerson(event)">Add&nbsp;to&nbsp;Table</button>
-        </form>
-        <table class="table table-striped">
-            <tbody id="items-table">
-            </tbody>
-        </table>
+
     </div>
 
     <script>
-        /*** DATA (STATE) ***/
 
-        const people = [{ name: "Natalie", type: "Great", position: "Forward", date: new Date(Date.now()) }] // pretend this came from a backend
+        // function isJavascriptDeveloper(developer) {
+        //     return developer.language === "JavaScript"
+        // }
+
+        // we used it with array methods
+        list.filter(developer => developer.language === "JavaScript")
+
+        // we used it with unit testing
+        describe("Team class", function () {
+
+        })
 
 
-        /*** RENDER FUNCTIONS ***/
+        // always use an arrow function (opinion)
+        // 1) if it's a callback function
+        // 2) if it only has one line of code in it
 
-        // Render based on the data
-        // Clear what was there before, render it all again
 
-        const createTextbox = document.getElementById("create-textbox")
-        const typeTextbox = document.getElementById("type-textbox")
-        const numberSelect = document.getElementById("number-select")
-        const tableBody = document.querySelector("#items-table")
 
-        function renderPeopleTable() {
-            emptyElement(tableBody)
-            for (let i = 0; i < people.length; i++) {
-                const person = people[i]
 
-                const newRow = document.createElement("tr")
-                newRow.innerHTML = `
-                <td>${person.name}</td>
-                <td>${person.type}</td>
-                <td>${person.position}</td>
-                <td>${person.date.toLocaleDateString()}</td>
-                <td><button id="delete-button" class="btn btn-danger">Delete</button></td>
-                <td><button id="update-button" class="btn btn-warning">Update Type to Special</button></td>
-            `
-                newRow.querySelector("#delete-button").addEventListener("click", () => deletePerson(person) )
-                newRow.querySelector("#update-button").addEventListener("click", () => updatePerson(person) )
-                tableBody.appendChild(newRow)
-            }
-        }
 
-        // TO MAKE LEGIT: get the data from backend
-        renderPeopleTable() // when the app first loads in
-    
 
-        /*** EVENT LISTENERS ***/
+        const listOfMessages = [
+            { id: 0, text: "Hello!" }, { id: 1, text: "Bye!" }
+        ]
+        renderMessages(listOfMessages)
 
-        // Change the data, and then call the render functions
+        function renderMessages(messages) {
 
-        function addPerson(event) {
-            event.preventDefault()
-
-            // Make the newly created piece of data
-            const newPerson = {
-                name: createTextbox.value,
-                type: typeTextbox.value,
-                position: numberSelect.value,
-                date: new Date(Date.now())
+            for (let i = 0; i < messages.length; i++) {
+                const message = messages[i]
+                const div = document.createElement("div")
+                div.textContent = message.text
+                div.addEventListener("click", () => {
+                    const indexToDelete = messages.findIndex(
+                        m => m.id === message.id
+                    )
+                    messages.splice(indexToDelete, 1)
+                    div.remove()
+                })
+                container.appendChild(div)
             }
 
-            // Adding it to the state (data)
-            people.push(newPerson)
+            // message the first time the second time
 
-            // TO MAKE LEGIT: Add it to the backend
-            
 
-            // Render again
-            renderPeopleTable()
-
-            // Clear the form
-            createTextbox.value = ""
-            typeTextbox.value = ""
         }
 
-        function deletePerson(personToDelete) {
-            console.log("personToDelete", personToDelete)
-            // Update the data
-            const indexToRemove = people.indexOf(personToDelete)
-            people.splice(indexToRemove, 1)
+        const names = ["abigail", "natalie", "rachel"]
+        const nameLengths = []
 
-            // TO MAKE LEGIT: Add it to the backend
-            
-
-
-            // Make it so
-            renderPeopleTable()
+        for (let i = 0; i < names.length; i++) {
+            const length = names[i].length
+            nameLengths.push(length)
         }
+        
 
-        function updatePerson(personToUpdate) {
-            console.log("personToUpdate", personToUpdate)
-            // Update the data
-            personToUpdate.type = "Special"
-
-            // TO MAKE LEGIT: Add it to the backend
-            
-
-            // Make it so
-            renderPeopleTable()
-        }
-
-        // HELPER
-
-        function emptyElement(element) {
-            while (element.firstChild) {
-                element.removeChild(element.firstChild)
-            }
-        }
 
     </script>
 </body>
