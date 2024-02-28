@@ -11,72 +11,26 @@
 
 <body>
     <div class="container mt-4">
-
+        <h3>Favorite Movies</h3>
+        <form class="d-flex gap-2">
+            <input id="movie-title-input" type="text" class="form-control form-control-sm" />
+            <input id="movie-genre-input" type="text" class="form-control form-control-sm" />
+            <button onclick="addMovie(event)" class="btn btn-sm btn-outline-success">Add</button>
+        </form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Genre</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="movie-table-body">
+            </tbody>
+        </table>
     </div>
 
-    <script>
-
-        // function isJavascriptDeveloper(developer) {
-        //     return developer.language === "JavaScript"
-        // }
-
-        // we used it with array methods
-        list.filter(developer => developer.language === "JavaScript")
-
-        // we used it with unit testing
-        describe("Team class", function () {
-
-        })
-
-
-        // always use an arrow function (opinion)
-        // 1) if it's a callback function
-        // 2) if it only has one line of code in it
-
-
-
-
-
-
-        const listOfMessages = [
-            { id: 0, text: "Hello!" }, { id: 1, text: "Bye!" }
-        ]
-        renderMessages(listOfMessages)
-
-        function renderMessages(messages) {
-
-            for (let i = 0; i < messages.length; i++) {
-                const message = messages[i]
-                const div = document.createElement("div")
-                div.textContent = message.text
-                div.addEventListener("click", () => {
-                    const indexToDelete = messages.findIndex(
-                        m => m.id === message.id
-                    )
-                    messages.splice(indexToDelete, 1)
-                    div.remove()
-                })
-                container.appendChild(div)
-            }
-
-            // message the first time the second time
-
-
-        }
-
-        const names = ["abigail", "natalie", "rachel"]
-        const nameLengths = []
-
-        for (let i = 0; i < names.length; i++) {
-            const length = names[i].length
-            nameLengths.push(length)
-        }
-        
-
-
-    </script>
+    <script src="scratch.js"></script>
 </body>
 
 </html>
-
-<!-- GREAT BEFORE -->

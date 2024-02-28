@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-4">
+
+    </div>
+
+    <script>
+
+        // function isJavascriptDeveloper(developer) {
+        //     return developer.language === "JavaScript"
+        // }
+
+        // we used it with array methods
+        list.filter(developer => developer.language === "JavaScript")
+
+        // we used it with unit testing
+        describe("Team class", function () {
+
+        })
+
+
+        // always use an arrow function (opinion)
+        // 1) if it's a callback function
+        // 2) if it only has one line of code in it
+
+
+
+
+
+
+        const listOfMessages = [
+            { id: 0, text: "Hello!" }, { id: 1, text: "Bye!" }
+        ]
+        renderMessages(listOfMessages)
+
+        function renderMessages(messages) {
+
+            for (let i = 0; i < messages.length; i++) {
+                const message = messages[i]
+                const div = document.createElement("div")
+                div.textContent = message.text
+                div.addEventListener("click", () => {
+                    const indexToDelete = messages.findIndex(
+                        m => m.id === message.id
+                    )
+                    messages.splice(indexToDelete, 1)
+                    div.remove()
+                })
+                container.appendChild(div)
+            }
+
+            // message the first time the second time
+
+
+        }
+
+        const names = ["abigail", "natalie", "rachel"]
+        const nameLengths = []
+
+        for (let i = 0; i < names.length; i++) {
+            const length = names[i].length
+            nameLengths.push(length)
+        }
+        
+
+
+    </script>
+</body>
+
+</html>
+
+<!-- GREAT BEFORE -->
