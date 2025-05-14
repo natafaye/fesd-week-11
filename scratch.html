@@ -10,70 +10,7 @@
 </head>
 
 <body>
-    <div class="container mt-4">
-        <h3>Grocery List</h3>
-        <form class="d-flex gap-2">
-            <input id="new-textbox" type="text" class="form-control"/>
-            <button class="btn btn-primary" onclick="handleAddClick(event)">Add</button>
-        </form>
-        <ul id="list"></ul>
-    </div>
-
-    <script>
-
-        /**** STATE ****/
-        const shoppingList = ["bananas", "rice", "cereal", "cheerios", "apples", "flour", "sugar"]
-
-
-        /**** RENDERING ****/
-        const list = document.querySelector("#list")
-
-        function renderShoppingList() {
-            list.innerHTML = "" // quick and dirty clean it out
-            for(let i = 0; i < shoppingList.length; i++) {
-                const itemValue = shoppingList[i]
-
-                const newLi = document.createElement("li")
-
-                newLi.innerHTML = `
-                    <span>${itemValue}</span>
-                    <button class="btn btn-danger ms-3" id="delete-button">Delete</button>
-                `
-
-                newLi.querySelector("#delete-button").addEventListener("click", () => {
-                    newLi.remove()
-
-                    const indexToDelete = shoppingList.indexOf(itemValue)
-                    shoppingList.splice(indexToDelete, 1)
-                })
-
-                list.appendChild(newLi)
-            }
-        }
-
-        // Call rendering code as soon as app loads in
-        renderShoppingList()
-
-
-        /**** LISTENING ****/
-        const textbox = document.getElementById("new-textbox")
-
-        function handleAddClick(event) {
-            event.preventDefault() 
-
-            // 1) Update the state
-            shoppingList.push(textbox.value)
-
-            // 2) Re-render based on the state
-            // Make sure that the screen (UI) matches the state (data)
-            renderShoppingList()
-
-            textbox.value = ""
-        }
-
-    </script>
+    <script src="scratch.js"></script>
 </body>
 
 </html>
-
-<!-- THE GREAT BEFORE -->
