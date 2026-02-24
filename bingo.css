@@ -1,0 +1,15 @@
+.bingo-card {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    max-width: 25rem;
+    font-size: 4rem;
+}
+
+.bingo-card div {
+    aspect-ratio: 1;
+    background-color: white;
+}
+
+#next-container {
+    font-size: 4rem;
+}

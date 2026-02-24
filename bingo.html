@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bingo.css">
+</head>
+<body>
+    <div class="container mt-3">
+        <h2 class="display-2">Bingo</h2>
+        <hr/>
+        <div>
+            <h4>Next Bingo Thing:</h4>
+            <div id="next-container">
+                🧀
+            </div>
+            <button class="btn btn-primary mt-3" onclick="getNextEmoji()">Next</button>
+        </div>
+        <hr/>
+        <div class="d-flex gap-5">
+            <div>
+                <h4>My Card</h4>
+                <div id="player-card" class="bingo-card card p-3 text-center gap-3 bg-light"></div>
+            </div>
+            <div>
+                <h4>AI Card</h4>
+                <div id="computer-card" class="bingo-card card p-3 text-center gap-3 bg-light"></div>
+            </div>
+        </div>
+    </div>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="bingo.js"></script>
+</body>
+</html>
